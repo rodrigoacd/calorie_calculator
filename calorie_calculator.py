@@ -21,6 +21,17 @@ class CalorieCalculator:
         self.height = height
         self.gender = gender.lower()
     
+    def calculate_bmi(self):
+        """
+        FEATURE-X: Calcula el Índice de Masa Corporal (BMI)
+        
+        Returns:
+            float: BMI
+        """
+        height_m = self.height / 100
+        bmi = self.weight / (height_m ** 2)
+        return round(bmi, 2)
+    
     def calculate_bmr(self):
         """
         Calcula la Tasa Metabólica Basal (BMR) usando la fórmula de Harris-Benedict
@@ -118,7 +129,8 @@ def main():
     print(f"  Altura: {calculator.height} cm")
     print(f"  Género: {calculator.gender}")
     
-    print(f"\nTasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
+    print(f"\nÍndice de Masa Corporal (BMI): {calculator.calculate_bmi()}")
+    print(f"Tasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
     
     print("\nGasto Energético Diario Total (TDEE) por nivel de actividad:")
     for level in ['sedentary', 'light', 'moderate', 'active', 'very_active']:
