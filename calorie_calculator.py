@@ -21,6 +21,27 @@ class CalorieCalculator:
         self.height = height
         self.gender = gender.lower()
     
+    def calculate_water_intake(self, activity_level='moderate'):
+        """
+        FEATURE-Y: Calcula la ingesta diaria recomendada de agua
+        
+        Args:
+            activity_level (str): Nivel de actividad
+        
+        Returns:
+            float: Litros de agua recomendados
+        """
+        base_water = self.weight * 0.033
+        activity_multipliers = {
+            'sedentary': 1.0,
+            'light': 1.1,
+            'moderate': 1.2,
+            'active': 1.3,
+            'very_active': 1.5
+        }
+        multiplier = activity_multipliers.get(activity_level, 1.0)
+        return round(base_water * multiplier, 2)
+    
     def calculate_bmr(self):
         """
         Calcula la Tasa Metabólica Basal (BMR) usando la fórmula de Harris-Benedict
@@ -118,7 +139,8 @@ def main():
     print(f"  Altura: {calculator.height} cm")
     print(f"  Género: {calculator.gender}")
     
-    print(f"\nTasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
+    print(f"\nIngesta de agua recomendada: {calculator.calculate_water_intake('moderate')} litros/día")
+    print(f"Tasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
     
     print("\nGasto Energético Diario Total (TDEE) por nivel de actividad:")
     for level in ['sedentary', 'light', 'moderate', 'active', 'very_active']:
