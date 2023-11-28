@@ -21,6 +21,29 @@ class CalorieCalculator:
         self.height = height
         self.gender = gender.lower()
     
+    def calculate_macros(self, calories, diet_type='balanced'):
+        """
+        FEATURE-Z: Calcula la distribución de macronutrientes
+        
+        Args:
+            calories (float): Calorías totales diarias
+            diet_type (str): Tipo de dieta
+        
+        Returns:
+            dict: Distribución de macronutrientes
+        """
+        distributions = {
+            'balanced': {'protein': 0.30, 'carbs': 0.40, 'fats': 0.30},
+            'high_protein': {'protein': 0.40, 'carbs': 0.30, 'fats': 0.30},
+            'low_carb': {'protein': 0.35, 'carbs': 0.20, 'fats': 0.45}
+        }
+        dist = distributions.get(diet_type, distributions['balanced'])
+        return {
+            'protein': round((calories * dist['protein']) / 4, 1),
+            'carbs': round((calories * dist['carbs']) / 4, 1),
+            'fats': round((calories * dist['fats']) / 9, 1)
+        }
+    
     def calculate_bmr(self):
         """
         Calcula la Tasa Metabólica Basal (BMR) usando la fórmula de Harris-Benedict
@@ -119,6 +142,15 @@ def main():
     print(f"  Género: {calculator.gender}")
     
     print(f"\nTasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
+    
+    tdee = calculator.calculate_tdee('moderate')
+    print(f"TDEE (actividad moderada): {tdee} calorías/día")
+    
+    macros = calculator.calculate_macros(tdee)
+    print(f"\nDistribución de macronutrientes (dieta balanceada):")
+    print(f"  Proteína: {macros['protein']}g")
+    print(f"  Carbohidratos: {macros['carbs']}g")
+    print(f"  Grasas: {macros['fats']}g")
     
     print("\nGasto Energético Diario Total (TDEE) por nivel de actividad:")
     for level in ['sedentary', 'light', 'moderate', 'active', 'very_active']:
