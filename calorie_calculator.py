@@ -41,6 +41,16 @@ class CalorieCalculator:
         }
         multiplier = activity_multipliers.get(activity_level, 1.0)
         return round(base_water * multiplier, 2)
+    def calculate_bmi(self):
+        """
+        FEATURE-X: Calcula el Índice de Masa Corporal (BMI)
+        
+        Returns:
+            float: BMI
+        """
+        height_m = self.height / 100
+        bmi = self.weight / (height_m ** 2)
+        return round(bmi, 2)
     
     def calculate_bmr(self):
         """
@@ -140,6 +150,7 @@ def main():
     print(f"  Género: {calculator.gender}")
     
     print(f"\nIngesta de agua recomendada: {calculator.calculate_water_intake('moderate')} litros/día")
+    print(f"\nÍndice de Masa Corporal (BMI): {calculator.calculate_bmi()}")
     print(f"Tasa Metabólica Basal (BMR): {calculator.calculate_bmr()} calorías/día")
     
     print("\nGasto Energético Diario Total (TDEE) por nivel de actividad:")
